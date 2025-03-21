@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <!-- Définition du groupe "Delivery Manager" -->
+        <record id="group_delivery_manager" model="res.groups">
+            <field name="name">Delivery Manager</field>
+        </record>
+
+    </data>
+</odoo>

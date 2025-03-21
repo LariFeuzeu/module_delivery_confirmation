@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="name">stock.view_picking_form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scheduled_date']" position="before">
+                <field name="physical_delivery_ok" readonly="1"/>
+            </xpath>
+            <header>
+                <button string="Livraison effectuée" type="object"
+                        name="action_warehousekeeper_confirmation"
+                        attrs="{'invisible': [('physical_delivery_ok','=',True)]}"
+                        class="btn btn-primary"
+                        groups="its_stock_delivery_confirmation.group_delivery_manager"
+                />
+
+
+                <!-- Bouton d'annulation de la livraison -->
+                <button string="Annuler la livraison" type="object"
+                        name="action_cancel_delivery_confirmation"
+                        attrs="{'invisible': [('physical_delivery_ok','=',False)]}"
+                />
+            </header>
+        </field>
+    </record>
+</odoo>
