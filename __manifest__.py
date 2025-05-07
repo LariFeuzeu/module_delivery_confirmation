@@ -10,8 +10,8 @@
             customer.
     """,
 
-    'author': "ITS, Lari Feuzeu ",
-    'website': "http://www.its-nh.com",
+    'author': " Lari Feuzeu ",
+    'website': "",
     'category': 'Stock Management',
     'version': '11.1.0.1',
 
