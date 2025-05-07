@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <!-- Définition du groupe "Delivery Manager" -->
+        <record id="btn_delivery_manager" model="res.groups">
+            <field name="name">Delivery Manager</field>
+        </record>
+
+        <record id="btn_delivery_manager_print_invoice" model="res.groups">
+        <field name="name"> Print invoice</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="name">stock.view_picking_form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scheduled_date']" position="before">
+                <field name="physical_delivery_ok" readonly="1"/>
+            </xpath>
+            <header>
+                <button string="Livraison effectuée" type="object"
+                        name="action_warehousekeeper_confirmation"
+                        attrs="{'invisible': [('physical_delivery_ok','=',True)]}"
+                        class="btn btn-primary"
+                        groups="its_stock_delivery_confirmation.btn_delivery_manager"
+                />
+                <!-- Bouton d'annulation de la livraison -->
+                <button string="Annuler la livraison" type="object"
+                        name="action_cancel_delivery_confirmation"
+                        attrs="{'invisible': [('physical_delivery_ok','=',False)]}"
+                />
+
+            </header>
+        </field>
+    </record>
+
+    <record id="view_picking_form_inherit_invoice_button" model="ir.ui.view">
+        <field name="name">stock.picking.form.invoice.button</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="action_print_invoice"
+                        type="object"
+                        string="Imprimer la facture"
+                        class="btn btn-secondary"
+                        groups="its_stock_delivery_confirmation.btn_delivery_manager_print_invoice"
+                />
+            </header>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_picking_form_inherit">
+        <field name="name">stock_picking_state.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="physical_delivery_state"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock_picking_filter_group.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='draft']" position="after">
+                <filter string="Livraison effectueé" name="delivery_done"
+                        domain="[('physical_delivery_state', '=', 'done')]"/>
+                <filter string="Livraison partielle" name="delivery_in_progress"
+                        domain="[('physical_delivery_state', '=', 'partial_delivery')]"/>
+                <filter string="Livraison En attente" name="delivery_pending"
+                        domain="[('physical_delivery_state', '=', 'pending'), ('picking_type_code', '=', 'outgoing'), ('state', '=', 'done')]"/>
+                <group string="Regrouper par Etat de livraison">
+                    <filter name="group_by_delevery_state" context="{'group_by': 'physical_delivery_state'}"
+                            string="Etat de livraison"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
